@@ -12,6 +12,7 @@
 
 #include "pushswap.h"
 
+//sa: swap the first two elements at the top of stack A
 void	sa(t_node **stack_a)
 {
 	t_node	*tmp;
@@ -25,6 +26,7 @@ void	sa(t_node **stack_a)
 	}
 }
 
+// sb: swap the first two elements at the top of stack B
 void	sb(t_node **stack_b)
 {
 	t_node	*tmp;
@@ -38,6 +40,14 @@ void	sb(t_node **stack_b)
 	}
 }
 
+// ss: perform sa and sb at the same time
+void	ss(t_node **a, t_node **b)
+{
+	sa(a);
+	sa(b);
+}
+
+// pa: push the top element from stack B to the top of stack A
 void	pa(t_node **stack_a, t_node **stack_b)
 {
 	t_node	*tmp;
@@ -51,6 +61,7 @@ void	pa(t_node **stack_a, t_node **stack_b)
 	}
 }
 
+// pb: push the top element from stack A to the top of stack B
 void	pb(t_node **stack_a, t_node **stack_b)
 {
 	t_node	*tmp;

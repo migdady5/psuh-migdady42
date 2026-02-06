@@ -12,6 +12,7 @@
 
 #include "pushswap.h"
 
+// ra: rotate stack A up (first element becomes last)
 void	ra(t_node **stack_a)
 {
 	t_node	*tmp;
@@ -29,6 +30,7 @@ void	ra(t_node **stack_a)
 	}
 }
 
+// rb: rotate stack B up (first element becomes last)
 void	rb(t_node **stack_b)
 {
 	t_node	*tmp;
@@ -46,40 +48,9 @@ void	rb(t_node **stack_b)
 	}
 }
 
-void	rra(t_node **stack_a)
+// rr: perform ra and rb at the same time
+void	rr(t_node **a, t_node **b)
 {
-	t_node	*tmp;
-	t_node	*second_last;
-
-	if (*stack_a && (*stack_a)->next)
-	{
-		second_last = *stack_a;
-		while (second_last->next && second_last->next->next)
-		{
-			second_last = second_last->next;
-		}
-		tmp = second_last->next;
-		second_last->next = NULL;
-		tmp->next = *stack_a;
-		*stack_a = tmp;
-	}
-}
-
-void	rrb(t_node **stack_b)
-{
-	t_node	*tmp;
-	t_node	*second_last;
-
-	if (*stack_b && (*stack_b)->next)
-	{
-		second_last = *stack_b;
-		while (second_last->next && second_last->next->next)
-		{
-			second_last = second_last->next;
-		}
-		tmp = second_last->next;
-		second_last->next = NULL;
-		tmp->next = *stack_b;
-		*stack_b = tmp;
-	}
+	ra(a);
+	rb(b);
 }
