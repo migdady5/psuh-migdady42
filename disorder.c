@@ -28,7 +28,7 @@ double	compute_disorder(t_node *a)
 		while (j)
 		{
 			total_pairs++;
-			if (i->value > j->value)
+			if (i->data > j->data)
 				mistakes++;
 			j = j->next;
 		}
@@ -38,3 +38,4 @@ double	compute_disorder(t_node *a)
 		return (0.0);
 	return (mistakes / total_pairs);
 }
+
