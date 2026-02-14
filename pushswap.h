@@ -10,9 +10,28 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef PUSHSWAP_H
+# define PUSHSWAP_H
+
+#include <stdlib.h>
+#include <unistd.h>
+#include <limits.h>
+#include "libft.h"
+
 double	compute_disorder(t_node *a);
+void error_exit(void);
+char	**collect_tokens(int ac, char **av);
+int		count_total_tokens(int ac, char **av);
+int	*validate_and_parse(char **tokens, int *out);
+void	free_tokens_partial(char **tokens, int count);
+int	atoi_strict(const char *str, int *out);
+int	check_duplicates(int *arr, int n);
+int	count_words(char *s);
+char	*copy_word(char *s, int *i);
 typedef struct s_node
 {
 	void			*data;
 	struct s_node	*next;
 }	t_node;
+
+#endif
