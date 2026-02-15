@@ -28,6 +28,11 @@ int	atoi_strict(const char *str, int *out);
 int	check_duplicates(int *arr, int n);
 int	count_words(char *s);
 char	*copy_word(char *s, int *i);
+t_node	*build_stack_a(int *arr, int n);
+void	free_stack(t_node *stack);
+int	is_sorted(t_node *stack);
+int	stack_size(t_node *stack);
+t_node	*stack_last(t_node *stack);
 typedef struct s_node
 {
 	void			*data;
