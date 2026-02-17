@@ -26,12 +26,29 @@ int	count_total_tokens(int ac, char **av)
 	}
 	return (total);
 }
+static int	fill_tokens_from_arg(char **tokens, int k, char *arg)
+{
+	int	j;
+
+	j = 0;
+	while (arg[j])
+	{
+		while (arg[j] == ' ')
+			j++;
+		if (!arg[j])
+			break ;
+		tokens[k] = copy_word(arg, &j);
+		if (!tokens[k])
+			return (-1);
+		k++;
+	}
+	return (k);
+}
 
 char	**collect_tokens(int ac, char **av, int *arr)
 {
 	char	**tokens;
 	int		i;
-	int		j;
 	int		k;
 
 	*arr = count_total_tokens(ac, av);
@@ -44,20 +61,12 @@ char	**collect_tokens(int ac, char **av, int *arr)
 	k = 0;
 	while (i < ac)
 	{
-		j = 0;
-		while (av[i][j])
-		{
-			while (av[i][j] == ' ')
-				j++;
-			if (!av[i][j])
-				break ;
-			tokens[k] = copy_word(av[i], &j);
-			if (!tokens[k])
-				return (free_tokens_partial(tokens, k), NULL);
-			k++;
-		}
+		k = fill_tokens_from_arg(tokens, k, av[i]);
+		if (k == -1)
+			return (free_tokens_partial(tokens, k + 1), NULL);
 		i++;
 	}
 	tokens[k] = NULL;
 	return (tokens);
 }
+
