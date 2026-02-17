@@ -6,7 +6,7 @@
 /*   By: tmeqdad <toqa.meqdad@learner.42.tech>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 16:39:23 by tmeqdad           #+#    #+#             */
-/*   Updated: 2026/02/09 16:39:23 by tmeqdad          ###   ########.fr       */
+/*   Updated: 2026/02/17 15:32:27 by tmeqdad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ double	compute_disorder(t_node *a)
 		{
 			total_pairs++;
 			if (i->data > j->data)
-				mistakes++;
+				mistakes += 1.0;
 			j = j->next;
 		}
 		i = i->next;
@@ -38,4 +38,3 @@ double	compute_disorder(t_node *a)
 		return (0.0);
 	return (mistakes / total_pairs);
 }
-
