@@ -6,7 +6,7 @@
 /*   By: tmeqdad <toqa.meqdad@learner.42.tech>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/30 19:16:33 by tmeqdad           #+#    #+#             */
-/*   Updated: 2026/01/30 19:16:33 by tmeqdad          ###   ########.fr       */
+/*   Updated: 2026/02/17 15:27:45 by tmeqdad          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	sb(t_node **stack_b)
 void	ss(t_node **a, t_node **b)
 {
 	sa(a);
-	sa(b);
+	sb(b);
 }
 
 // pa: push the top element from stack B to the top of stack A
