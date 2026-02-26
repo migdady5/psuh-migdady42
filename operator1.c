@@ -12,65 +12,57 @@
 
 #include "pushswap.h"
 
-//sa: swap the first two elements at the top of stack A
-void	sa(t_node **stack_a)
+static void	swap_op(t_node **s)
 {
 	t_node	*tmp;
 
-	if (*stack_a && (*stack_a)->next)
-	{
-		tmp = (*stack_a)->next;
-		(*stack_a)->next = tmp->next;
-		tmp->next = *stack_a;
-		*stack_a = tmp;
-	}
+	if (!s || !*s || !(*s)->next)
+		return ;
+	tmp = (*s)->next;
+	(*s)->next = tmp->next;
+	tmp->next = *s;
+	*s = tmp;
 }
 
-// sb: swap the first two elements at the top of stack B
-void	sb(t_node **stack_b)
+void	sa(t_node **a)
 {
-	t_node	*tmp;
-
-	if (*stack_b && (*stack_b)->next)
-	{
-		tmp = (*stack_b)->next;
-		(*stack_b)->next = tmp->next;
-		tmp->next = *stack_b;
-		*stack_b = tmp;
-	}
+	swap_op(a);
+	write(1, "sa\n", 3);
 }
 
-// ss: perform sa and sb at the same time
+void	sb(t_node **b)
+{
+	swap_op(b);
+	write(1, "sb\n", 3);
+}
+
 void	ss(t_node **a, t_node **b)
 {
-	sa(a);
-	sb(b);
+	swap_op(a);
+	swap_op(b);
+	write(1, "ss\n", 3);
 }
 
-// pa: push the top element from stack B to the top of stack A
-void	pa(t_node **stack_a, t_node **stack_b)
+static void	push_op(t_node **src, t_node **dst)
 {
 	t_node	*tmp;
 
-	if (*stack_b)
-	{
-		tmp = *stack_b;
-		*stack_b = (*stack_b)->next;
-		tmp->next = *stack_a;
-		*stack_a = tmp;
-	}
+	if (!src || !*src)
+		return ;
+	tmp = *src;
+	*src = (*src)->next;
+	tmp->next = *dst;
+	*dst = tmp;
 }
 
-// pb: push the top element from stack A to the top of stack B
-void	pb(t_node **stack_a, t_node **stack_b)
+void	pa(t_node **a, t_node **b)
 {
-	t_node	*tmp;
+	push_op(b, a);
+	write(1, "pa\n", 3);
+}
 
-	if (*stack_a)
-	{
-		tmp = *stack_a;
-		*stack_a = (*stack_a)->next;
-		tmp->next = *stack_b;
-		*stack_b = tmp;
-	}
+void	pb(t_node **a, t_node **b)
+{
+	push_op(a, b);
+	write(1, "pb\n", 3);
 }

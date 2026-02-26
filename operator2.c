@@ -12,45 +12,37 @@
 
 #include "pushswap.h"
 
-// ra: rotate stack A up (first element becomes last)
-void	ra(t_node **stack_a)
+static void	rotate_op(t_node **s)
 {
 	t_node	*tmp;
 	t_node	*last;
 
-	if (*stack_a && (*stack_a)->next)
-	{
-		tmp = *stack_a;
-		*stack_a = (*stack_a)->next;
-		tmp->next = NULL;
-		last = *stack_a;
-		while (last->next)
-			last = last->next;
-		last->next = tmp;
-	}
+	if (!s || !*s || !(*s)->next)
+		return ;
+	tmp = *s;
+	*s = (*s)->next;
+	tmp->next = NULL;
+	last = *s;
+	while (last->next)
+		last = last->next;
+	last->next = tmp;
 }
 
-// rb: rotate stack B up (first element becomes last)
-void	rb(t_node **stack_b)
+void	ra(t_node **a)
 {
-	t_node	*tmp;
-	t_node	*last;
-
-	if (*stack_b && (*stack_b)->next)
-	{
-		tmp = *stack_b;
-		*stack_b = (*stack_b)->next;
-		tmp->next = NULL;
-		last = *stack_b;
-		while (last->next)
-			last = last->next;
-		last->next = tmp;
-	}
+	rotate_op(a);
+	write(1, "ra\n", 3);
 }
 
-// rr: perform ra and rb at the same time
+void	rb(t_node **b)
+{
+	rotate_op(b);
+	write(1, "rb\n", 3);
+}
+
 void	rr(t_node **a, t_node **b)
 {
-	ra(a);
-	rb(b);
+	rotate_op(a);
+	rotate_op(b);
+	write(1, "rr\n", 3);
 }

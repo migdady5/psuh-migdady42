@@ -28,6 +28,7 @@ static int	get_sign(const char *str, int *i)
 
 static int	parse_num(const char *str, int *i, long *num, int sign)
 {
+		(void)sign;
 	while (str[*i])
 	{
 		if (!ft_isdigit(str[*i]))

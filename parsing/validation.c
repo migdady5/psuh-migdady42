@@ -12,7 +12,7 @@
 
 #include "pushswap.h"
 
-static int	fill_number(chaar **tokens, int *arr, int n)
+static int	fill_number(char **tokens, int *arr, int n)
 {
 	int	i;
 	int	value;
