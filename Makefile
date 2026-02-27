@@ -12,8 +12,18 @@ SRC = push_swap.c \
       stack_building/build_stack_utils.c \
       parsing/collect_tokens.c \
       parsing/collect_tokens_utils.c \
+	parsing/flags.c \
       parsing/error_utils.c \
       parsing/parse.c \
+	  sorting/sort.c \
+	  sorting/sort_3.c \
+	  sorting/sort_5.c \
+	  sorting/simple.c \
+	  sorting/chunk.c \
+	  sorting/radix.c \
+	  sorting/adaptive.c \
+	  ops/ops_init.c \
+	  ops/ops_core.c \
       parsing/validation.c
 
 LIBFT_DIR = libft42

@@ -12,37 +12,36 @@
 
 #include "pushswap.h"
 
-static void	rev_rotate_op(t_node **s)
+void	rra(t_node **a, t_ops *ops)
 {
-	t_node	*tmp;
-	t_node	*second_last;
-
-	if (!s || !*s || !(*s)->next)
-		return ;
-	second_last = *s;
-	while (second_last->next && second_last->next->next)
-		second_last = second_last->next;
-	tmp = second_last->next;
-	second_last->next = NULL;
-	tmp->next = *s;
-	*s = tmp;
-}
-
-void	rra(t_node **a)
-{
-	rev_rotate_op(a);
+	if (ops)
+	{
+		ops->rra++;
+		ops->total++;
+	}
+	rev_rotate_core(a);
 	write(1, "rra\n", 4);
 }
 
-void	rrb(t_node **b)
+void	rrb(t_node **b, t_ops *ops)
 {
-	rev_rotate_op(b);
+	if (ops)
+	{
+		ops->rrb++;
+		ops->total++;
+	}
+	rev_rotate_core(b);
 	write(1, "rrb\n", 4);
 }
 
-void	rrr(t_node **a, t_node **b)
+void	rrr(t_node **a, t_node **b, t_ops *ops)
 {
-	rev_rotate_op(a);
-	rev_rotate_op(b);
+	if (ops)
+	{
+		ops->rrr++;
+		ops->total++;
+	}
+	rev_rotate_core(a);
+	rev_rotate_core(b);
 	write(1, "rrr\n", 4);
 }

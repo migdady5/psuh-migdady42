@@ -12,57 +12,58 @@
 
 #include "pushswap.h"
 
-static void	swap_op(t_node **s)
+void	sa(t_node **a, t_ops *ops)
 {
-	t_node	*tmp;
-
-	if (!s || !*s || !(*s)->next)
-		return ;
-	tmp = (*s)->next;
-	(*s)->next = tmp->next;
-	tmp->next = *s;
-	*s = tmp;
-}
-
-void	sa(t_node **a)
-{
-	swap_op(a);
+	if (ops)
+	{
+		ops->sa++;
+		ops->total++;
+	}
+	swap_core(a);
 	write(1, "sa\n", 3);
 }
 
-void	sb(t_node **b)
+void	sb(t_node **b, t_ops *ops)
 {
-	swap_op(b);
+	if (ops)
+	{
+		ops->sb++;
+		ops->total++;
+	}
+	swap_core(b);
 	write(1, "sb\n", 3);
 }
 
-void	ss(t_node **a, t_node **b)
+void	ss(t_node **a, t_node **b, t_ops *ops)
 {
-	swap_op(a);
-	swap_op(b);
+	if (ops)
+	{
+		ops->ss++;
+		ops->total++;
+	}
+	swap_core(a);
+	swap_core(b);
 	write(1, "ss\n", 3);
 }
 
-static void	push_op(t_node **src, t_node **dst)
+void	pa(t_node **a, t_node **b, t_ops *ops)
 {
-	t_node	*tmp;
-
-	if (!src || !*src)
-		return ;
-	tmp = *src;
-	*src = (*src)->next;
-	tmp->next = *dst;
-	*dst = tmp;
-}
-
-void	pa(t_node **a, t_node **b)
-{
-	push_op(b, a);
+	if (ops)
+	{
+		ops->pa++;
+		ops->total++;
+	}
+	push_core(a, b);
 	write(1, "pa\n", 3);
 }
 
-void	pb(t_node **a, t_node **b)
+void	pb(t_node **a, t_node **b, t_ops *ops)
 {
-	push_op(a, b);
+	if (ops)
+	{
+		ops->pb++;
+		ops->total++;
+	}
+	push_core(b, a);
 	write(1, "pb\n", 3);
 }

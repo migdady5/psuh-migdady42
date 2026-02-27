@@ -12,13 +12,13 @@
 
 #include "pushswap.h"
 
-int	count_total_tokens(int ac, char **av)
+int	count_total_tokens(int ac, char **av, int start_i)
 {
 	int		i;
 	int		total;
 
 	total = 0;
-	i = 1;
+	i = start_i;
 	while (i < ac)
 	{
 		total += count_words(av[i]);
@@ -45,19 +45,19 @@ static int	fill_tokens_from_arg(char **tokens, int k, char *arg)
 	return (k);
 }
 
-char	**collect_tokens(int ac, char **av, int *arr)
+char	**collect_tokens(int ac, char **av, int start_i, int *arr)
 {
 	char	**tokens;
 	int		i;
 	int		k;
 
-	*arr = count_total_tokens(ac, av);
+	*arr = count_total_tokens(ac, av, start_i);
 	if (*arr == 0)
 		return (NULL);
 	tokens = malloc(sizeof(char *) * (*arr + 1));
 	if (!tokens)
 		return (NULL);
-	i = 1;
+	i = start_i;
 	k = 0;
 	while (i < ac)
 	{
