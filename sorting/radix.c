@@ -6,16 +6,53 @@
 /*   By: copilot <copilot@local>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 23:56:00 by copilot           #+#    #+#             */
-/*   Updated: 2026/02/26 23:56:00 by copilot          ###   ########.fr       */
+/*   Updated: 2026/03/05 00:00:00 by assistant        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pushswap.h"
 
+static int	max_bits(t_node *a)
+{
+	int	max;
+	int	bits;
+
+	max = 0;
+	while (a)
+	{
+		if (a->index > max)
+			max = a->index;
+		a = a->next;
+	}
+	bits = 0;
+	while ((max >> bits) != 0)
+		bits++;
+	return (bits);
+}
+
 void	radix_sort(t_node **a, t_node **b, t_ops *ops)
 {
-    (void)a;
-    (void)b;
-    (void)ops;
-    /* stub: implement radix sort for large datasets later */
+	int	n;
+	int	bits;
+	int	i;
+	int	j;
+
+	n = stack_size(*a);
+	bits = max_bits(*a);
+	i = 0;
+	while (i < bits)
+	{
+		j = 0;
+		while (j < n)
+		{
+			if (((*a)->index >> i) & 1)
+				ra(a, ops);
+			else
+				pb(a, b, ops);
+			j++;
+		}
+		while (*b)
+			pa(a, b, ops);
+		i++;
+	}
 }

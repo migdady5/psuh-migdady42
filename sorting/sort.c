@@ -6,13 +6,13 @@
 /*   By: amigdadi <amigdadi@learner.42.tech>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 20:17:14 by amigdadi          #+#    #+#             */
-/*   Updated: 2026/02/26 23:56:03 by amigdadi         ###   ########.fr       */
+/*   Updated: 2026/03/05 00:00:00 by assistant        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pushswap.h"
 
-void	sort(t_node **a, t_node **b, t_ops *ops, int mode)
+void	sort(t_node **a, t_node **b, t_ops *ops, t_mode mode)
 {
 	int	n;
 
@@ -29,19 +29,12 @@ void	sort(t_node **a, t_node **b, t_ops *ops, int mode)
 		sort_3(a, ops);
 	else if (n <= 5)
 		sort_5(a, b, ops);
+	else if (mode == MODE_SIMPLE)
+		simple_min_extract(a, b, ops);
+	else if (mode == MODE_MEDIUM)
+		chunk_sort(a, b, ops);
+	else if (mode == MODE_COMPLEX)
+		radix_sort(a, b, ops);
 	else
-	{
-		if (mode == MODE_SIMPLE)
-			simple_min_extract(a, b, ops);
-		else if (mode == MODE_MEDIUM)
-			chunk_sort(a, b, ops);
-		else if (mode == MODE_COMPLEX)
-			radix_sort(a, b, ops);
-		else if (mode == MODE_ADAPTIVE)
-			adaptive_sort(a, b, ops);
-		else if (mode == MODE_BENCH)
-			radix_sort(a, b, ops);
-		else
-			radix_sort(a, b, ops);
-	}
+		adaptive_sort(a, b, ops);
 }
