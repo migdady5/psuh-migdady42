@@ -6,11 +6,7 @@
 /*   By: amigdadi <amigdadi@learner.42.tech>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 19:28:04 by amigdadi          #+#    #+#             */
-<<<<<<< HEAD
 /*   Updated: 2026/03/05 00:00:00 by assistant        ###   ########.fr       */
-=======
-/*   Updated: 2026/03/05 18:40:53 by amigdadi         ###   ########.fr       */
->>>>>>> 72b8a3d (a)
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,27 +96,9 @@ int	main(int ac, char **av)
 	ops_init(&ops);
 	a = NULL;
 	b = NULL;
-<<<<<<< HEAD
 	if (!parse_flags(ac, av, &cfg, &count))
 		error_exit();
 	tokens = collect_tokens(ac, av, count, &count);
-=======
-	arr = NULL;
-	tokens = NULL;
-	token_count = 0;
-	num_count = 0;
-	first_num_i = 1;
-
-	int	bench;
-
-	if (!parse_flags(ac, av, &mode, &first_num_i, &bench))
-		error_exit();
-
-	if (mode == MODE_BENCH)
-		write(2, "BENCH ON\n", 9);
-
-	tokens = collect_tokens(ac, av, first_num_i, &token_count);
->>>>>>> 72b8a3d (a)
 	if (!tokens)
 		error_exit();
 	arr = validate_and_parse(tokens, &count);
@@ -132,33 +110,11 @@ int	main(int ac, char **av)
 	if (!a)
 		error_exit();
 	index_stack(a);
-<<<<<<< HEAD
 	disorder = compute_disorder(a);
 	if (!is_sorted(a))
 		sort(&a, &b, &ops, cfg.mode);
 	if (cfg.bench)
 		print_bench(cfg, &ops, disorder);
-=======
-
-	double	disorder;
-	const char	*strategy;
-	const char	*complexity;
-
-	disorder = 0.0;
-	if (bench)
-		disorder = compute_disorder(a);
-
-	/* defaults; adaptive_sort will update if needed */
-	strategy = "Unknown";
-	complexity = "?";
-
-	if (a && !is_sorted(a))
-		sort(&a, &b, &ops, (int)mode, disorder, &strategy, &complexity);
-
-	if (bench)
-		print_bench(&ops, disorder, strategy, complexity);
-
->>>>>>> 72b8a3d (a)
 	free_stack(a);
 	free_stack(b);
 	return (0);
