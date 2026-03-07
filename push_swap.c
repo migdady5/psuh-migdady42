@@ -23,11 +23,20 @@ typedef struct s_state
 static void	mode_meta(t_mode mode, const char **strategy, const char **complexity)
 {
 	if (mode == MODE_SIMPLE)
-		(*strategy = "Simple", *complexity = "O(n^2)");
+	{
+		*strategy = "Simple";
+		*complexity = "O(n^2)";
+	}
 	else if (mode == MODE_MEDIUM)
-		(*strategy = "Medium", *complexity = "O(n*sqrt(n))");
+	{
+		*strategy = "Medium";
+		*complexity = "O(n*sqrt(n))";
+	}
 	else
-		(*strategy = "Complex", *complexity = "O(n log n)");
+	{
+		*strategy = "Complex";
+		*complexity = "O(n log n)";
+	}
 }
 
 static void	bench_meta(t_config cfg, double disorder, const char **strategy,
