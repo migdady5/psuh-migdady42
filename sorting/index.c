@@ -6,7 +6,7 @@
 /*   By: tmeqdad <toqa.meqdad@learner.42.tech>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/02 16:33:24 by tmeqdad           #+#    #+#             */
-/*   Updated: 2026/03/02 16:33:24 by tmeqdad          ###   ########.fr       */
+/*   Updated: 2026/03/07 00:00:00 by assistant        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static void	sort_array(int *arr, int n)
 	}
 }
 
-static void	assign_index(t_node *a, int *arr,  int n)
+static void	assign_index(t_node *a, int *arr, int n)
 {
 	int	i;
 
@@ -65,7 +65,7 @@ static void	assign_index(t_node *a, int *arr,  int n)
 			if (a->data == arr[i])
 			{
 				a->index = i;
-				break;
+				break ;
 			}
 			i++;
 		}
@@ -81,7 +81,7 @@ void	index_stack(t_node *a)
 	n = stack_size(a);
 	arr = stack_to_array(a, n);
 	if (!arr)
-		return;
+		return ;
 	sort_array(arr, n);
 	assign_index(a, arr, n);
 	free(arr);

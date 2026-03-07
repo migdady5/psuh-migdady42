@@ -6,116 +6,96 @@
 /*   By: amigdadi <amigdadi@learner.42.tech>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/26 19:28:04 by amigdadi          #+#    #+#             */
-/*   Updated: 2026/03/05 00:00:00 by assistant        ###   ########.fr       */
+/*   Updated: 2026/03/07 00:00:00 by assistant        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pushswap.h"
 
-static void	put_long_fd(long n, int fd)
+typedef struct s_state
 {
-	if (n >= 10)
-		put_long_fd(n / 10, fd);
-	ft_putchar_fd((n % 10) + '0', fd);
-}
+	t_ops	ops;
+	t_node	*a;
+	t_node	*b;
+	int		count;
+}t_state;
 
-static void	put_percent_2(double val)
+static void	mode_meta(t_mode mode, const char **strategy, const char **complexity)
 {
-	long	scaled;
-
-	scaled = (long)(val * 100.0 + 0.5);
-	put_long_fd(scaled / 100, 2);
-	ft_putchar_fd('.', 2);
-	ft_putchar_fd(((scaled / 10) % 10) + '0', 2);
-	ft_putchar_fd((scaled % 10) + '0', 2);
-}
-
-static void	bench_strategy(t_config cfg, double disorder)
-{
-	if (cfg.mode == MODE_SIMPLE)
-		ft_putstr_fd("[bench] strategy: Simple / O(n^2)\n", 2);
-	else if (cfg.mode == MODE_MEDIUM)
-		ft_putstr_fd("[bench] strategy: Medium / O(n*sqrt(n))\n", 2);
-	else if (cfg.mode == MODE_COMPLEX)
-		ft_putstr_fd("[bench] strategy: Complex / O(n log n)\n", 2);
-	else if (disorder < 0.2)
-		ft_putstr_fd("[bench] strategy: Adaptive / O(n)\n", 2);
-	else if (disorder < 0.5)
-		ft_putstr_fd("[bench] strategy: Adaptive / O(n*sqrt(n))\n", 2);
+	if (mode == MODE_SIMPLE)
+		(*strategy = "Simple", *complexity = "O(n^2)");
+	else if (mode == MODE_MEDIUM)
+		(*strategy = "Medium", *complexity = "O(n*sqrt(n))");
 	else
-		ft_putstr_fd("[bench] strategy: Adaptive / O(n log n)\n", 2);
+		(*strategy = "Complex", *complexity = "O(n log n)");
 }
 
-static void	print_bench(t_config cfg, t_ops *ops, double disorder)
+static void	bench_meta(t_config cfg, double disorder, const char **strategy,
+		const char **complexity)
 {
-	ft_putstr_fd("[bench] disorder: ", 2);
-	put_percent_2(disorder * 100.0);
-	ft_putstr_fd("%\n", 2);
-	bench_strategy(cfg, disorder);
-	ft_putstr_fd("[bench] total_ops: ", 2);
-	put_long_fd(ops->total, 2);
-	ft_putstr_fd("\n", 2);
-	ft_putstr_fd("[bench] sa: ", 2);
-	put_long_fd(ops->sa, 2);
-	ft_putstr_fd(" sb: ", 2);
-	put_long_fd(ops->sb, 2);
-	ft_putstr_fd(" ss: ", 2);
-	put_long_fd(ops->ss, 2);
-	ft_putstr_fd(" pa: ", 2);
-	put_long_fd(ops->pa, 2);
-	ft_putstr_fd(" pb: ", 2);
-	put_long_fd(ops->pb, 2);
-	ft_putstr_fd("\n[bench] ra: ", 2);
-	put_long_fd(ops->ra, 2);
-	ft_putstr_fd(" rb: ", 2);
-	put_long_fd(ops->rb, 2);
-	ft_putstr_fd(" rr: ", 2);
-	put_long_fd(ops->rr, 2);
-	ft_putstr_fd(" rra: ", 2);
-	put_long_fd(ops->rra, 2);
-	ft_putstr_fd(" rrb: ", 2);
-	put_long_fd(ops->rrb, 2);
-	ft_putstr_fd(" rrr: ", 2);
-	put_long_fd(ops->rrr, 2);
-	ft_putstr_fd("\n", 2);
+	if (cfg.mode != MODE_ADAPTIVE)
+	{
+		mode_meta(cfg.mode, strategy, complexity);
+		return ;
+	}
+	*strategy = "Adaptive";
+	if (disorder < 0.2)
+		*complexity = "O(n)";
+	else if (disorder < 0.5)
+		*complexity = "O(n*sqrt(n))";
+	else
+		*complexity = "O(n log n)";
+}
+
+static void	build_input(int ac, char **av, t_config *cfg, t_state *st)
+{
+	char	**tokens;
+	int		*arr;
+
+	if (!parse_flags(ac, av, cfg, &st->count))
+		error_exit();
+	tokens = collect_tokens(ac, av, st->count, &st->count);
+	if (!tokens)
+		error_exit();
+	arr = validate_and_parse(tokens, &st->count);
+	free_tokens_partial(tokens, st->count);
+	if (!arr)
+		error_exit();
+	st->a = build_stack_a(arr, st->count);
+	free(arr);
+	if (!st->a)
+		error_exit();
+}
+
+static void	run_sorting(t_state *st, t_config cfg)
+{
+	index_stack(st->a);
+	if (!is_sorted(st->a))
+		sort(&st->a, &st->b, &st->ops, cfg.mode);
 }
 
 int	main(int ac, char **av)
 {
-	t_ops		ops;
-	t_node		*a;
-	t_node		*b;
+	t_state		st;
 	t_config	cfg;
-	int			*arr;
-	char		**tokens;
-	int			count;
 	double		disorder;
+	const char	*strategy;
+	const char	*complexity;
 
 	if (ac < 2)
 		return (0);
-	ops_init(&ops);
-	a = NULL;
-	b = NULL;
-	if (!parse_flags(ac, av, &cfg, &count))
-		error_exit();
-	tokens = collect_tokens(ac, av, count, &count);
-	if (!tokens)
-		error_exit();
-	arr = validate_and_parse(tokens, &count);
-	free_tokens_partial(tokens, count);
-	if (!arr)
-		error_exit();
-	a = build_stack_a(arr, count);
-	free(arr);
-	if (!a)
-		error_exit();
-	index_stack(a);
-	disorder = compute_disorder(a);
-	if (!is_sorted(a))
-		sort(&a, &b, &ops, cfg.mode);
+	ops_init(&st.ops);
+	st.a = NULL;
+	st.b = NULL;
+	build_input(ac, av, &cfg, &st);
+	disorder = compute_disorder(st.a);
+	run_sorting(&st, cfg);
 	if (cfg.bench)
-		print_bench(cfg, &ops, disorder);
-	free_stack(a);
-	free_stack(b);
+	{
+		bench_meta(cfg, disorder, &strategy, &complexity);
+		print_bench(&st.ops, disorder, strategy, complexity);
+	}
+	free_stack(st.a);
+	free_stack(st.b);
 	return (0);
 }

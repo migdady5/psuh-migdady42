@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pushswap.h                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: amigdadi <amigdadi@learner.42.tech>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/26 19:28:04 by amigdadi          #+#    #+#             */
+/*   Updated: 2026/03/07 00:00:00 by assistant        ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PUSHSWAP_H
 # define PUSHSWAP_H
 
@@ -11,7 +23,7 @@ typedef struct s_node
 	int				data;
 	int				index;
 	struct s_node	*next;
-}t_node;
+}	t_node;
 
 typedef struct s_ops
 {
@@ -27,7 +39,7 @@ typedef struct s_ops
 	long	rra;
 	long	rrb;
 	long	rrr;
-}t_ops;
+}	t_ops;
 
 typedef enum e_mode
 {
@@ -35,13 +47,13 @@ typedef enum e_mode
 	MODE_MEDIUM,
 	MODE_COMPLEX,
 	MODE_ADAPTIVE
-}t_mode;
+}	t_mode;
 
 typedef struct s_config
 {
 	t_mode	mode;
 	int		bench;
-}t_config;
+}	t_config;
 
 /* parsing */
 void	error_exit(void);
@@ -72,6 +84,8 @@ void	simple_min_extract(t_node **a, t_node **b, t_ops *ops);
 void	chunk_sort(t_node **a, t_node **b, t_ops *ops);
 void	radix_sort(t_node **a, t_node **b, t_ops *ops);
 void	adaptive_sort(t_node **a, t_node **b, t_ops *ops);
+void	print_bench(t_ops *ops, double disorder, const char *strategy,
+			const char *complexity);
 
 /* operations */
 void	ops_init(t_ops *ops);

@@ -37,6 +37,7 @@ void	push_core(t_node **dst, t_node **src)
 	tmp->next = *dst;
 	*dst = tmp;
 }
+
 void	rotate_core(t_node **s)
 {
 	t_node	*first;

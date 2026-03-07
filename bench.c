@@ -6,7 +6,7 @@
 /*   By: amigdadi <amigdadi@learner.42.tech>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/05 17:25:00 by amigdadi          #+#    #+#             */
-/*   Updated: 2026/03/05 18:05:11 by amigdadi         ###   ########.fr       */
+/*   Updated: 2026/03/07 00:00:00 by assistant        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,25 +30,8 @@ static void	put_percent_2(double disorder)
 	ft_putchar_fd((scaled % 10) + '0', 2);
 }
 
-void	print_bench(t_ops *ops, double disorder, const char *strategy,
-		const char *complexity)
+static void	print_ops_push_swap(t_ops *ops)
 {
-	double	disorder_percent;
-
-	if (!ops || !strategy || !complexity)
-		return ;
-	disorder_percent = disorder;
-	ft_putstr_fd("[bench] disorder: ", 2);
-	put_percent_2(disorder_percent);
-	ft_putstr_fd("%\n", 2);
-	ft_putstr_fd("[bench] strategy: ", 2);
-	ft_putstr_fd((char *)strategy, 2);
-	ft_putstr_fd(" / ", 2);
-	ft_putstr_fd((char *)complexity, 2);
-	ft_putstr_fd("\n", 2);
-	ft_putstr_fd("[bench] total_ops: ", 2);
-	put_long_fd(ops->total, 2);
-	ft_putstr_fd("\n", 2);
 	ft_putstr_fd("[bench] sa: ", 2);
 	put_long_fd(ops->sa, 2);
 	ft_putstr_fd(" sb: ", 2);
@@ -59,7 +42,12 @@ void	print_bench(t_ops *ops, double disorder, const char *strategy,
 	put_long_fd(ops->pa, 2);
 	ft_putstr_fd(" pb: ", 2);
 	put_long_fd(ops->pb, 2);
-	ft_putstr_fd("\n[bench] ra: ", 2);
+	ft_putstr_fd("\n", 2);
+}
+
+static void	print_ops_rotate(t_ops *ops)
+{
+	ft_putstr_fd("[bench] ra: ", 2);
 	put_long_fd(ops->ra, 2);
 	ft_putstr_fd(" rb: ", 2);
 	put_long_fd(ops->rb, 2);
@@ -72,4 +60,24 @@ void	print_bench(t_ops *ops, double disorder, const char *strategy,
 	ft_putstr_fd(" rrr: ", 2);
 	put_long_fd(ops->rrr, 2);
 	ft_putstr_fd("\n", 2);
+}
+
+void	print_bench(t_ops *ops, double disorder, const char *strategy,
+		const char *complexity)
+{
+	if (!ops || !strategy || !complexity)
+		return ;
+	ft_putstr_fd("[bench] disorder: ", 2);
+	put_percent_2(disorder);
+	ft_putstr_fd("%\n", 2);
+	ft_putstr_fd("[bench] strategy: ", 2);
+	ft_putstr_fd((char *)strategy, 2);
+	ft_putstr_fd(" / ", 2);
+	ft_putstr_fd((char *)complexity, 2);
+	ft_putstr_fd("\n", 2);
+	ft_putstr_fd("[bench] total_ops: ", 2);
+	put_long_fd(ops->total, 2);
+	ft_putstr_fd("\n", 2);
+	print_ops_push_swap(ops);
+	print_ops_rotate(ops);
 }
