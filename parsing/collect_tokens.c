@@ -6,7 +6,7 @@
 /*   By: tmeqdad <toqa.meqdad@learner.42.tech>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:55:02 by tmeqdad           #+#    #+#             */
-/*   Updated: 2026/02/17 13:17:43 by tmeqdad          ###   ########.fr       */
+/*   Updated: 2026/03/06 00:00:00 by tmeqdad        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	count_total_tokens(int ac, char **av, int start_i)
 {
-	int		i;
-	int		total;
+	int	i;
+	int	total;
 
 	total = 0;
 	i = start_i;
@@ -26,6 +26,7 @@ int	count_total_tokens(int ac, char **av, int start_i)
 	}
 	return (total);
 }
+
 static int	fill_tokens_from_arg(char **tokens, int k, char *arg)
 {
 	int	j;
@@ -69,4 +70,3 @@ char	**collect_tokens(int ac, char **av, int start_i, int *arr)
 	tokens[k] = NULL;
 	return (tokens);
 }
-

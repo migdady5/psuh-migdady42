@@ -17,10 +17,3 @@ void	error_exit(void)
 	write(2, "Error\n", 6);
 	exit(EXIT_FAILURE);
 }
-
-void	error_exit_with_free(int *arr)
-{
-	if (arr)
-		free(arr);
-	error_exit();
-}

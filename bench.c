@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: amigdadi <amigdadi@learner.42.tech>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/05 17:25:00 by amigdadi          #+#    #+#             */
-/*   Updated: 2026/03/05 19:41:29 by amigdadi         ###   ########.fr       */
+/*   Created: 2026/03/07 19:08:57 by amigdadi          #+#    #+#             */
+/*   Updated: 2026/03/07 19:09:02 by amigdadi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,26 +30,23 @@ static void	put_percent_2(double disorder)
 	ft_putchar_fd((scaled % 10) + '0', 2);
 }
 
-void	print_bench(t_ops *ops, double disorder, const char *strategy,
-		const char *complexity)
+static void	print_bench_meta(double disorder, const char *s, const char *c)
 {
-	double	disorder_percent;
-
-	if (!ops || !strategy || !complexity)
-		return ;
-	disorder_percent = disorder;
 	ft_putstr_fd("[bench] disorder: ", 2);
-	put_percent_2(disorder_percent);
+	put_percent_2(disorder);
 	ft_putstr_fd("%\n", 2);
 	ft_putstr_fd("[bench] strategy: ", 2);
-	ft_putstr_fd((char *)strategy, 2);
+	ft_putstr_fd((char *)s, 2);
 	ft_putstr_fd(" / ", 2);
-	ft_putstr_fd((char *)complexity, 2);
+	ft_putstr_fd((char *)c, 2);
 	ft_putstr_fd("\n", 2);
+}
+
+static void	print_bench_ops_a(t_ops *ops)
+{
 	ft_putstr_fd("[bench] total_ops: ", 2);
 	put_long_fd(ops->total, 2);
-	ft_putstr_fd("\n", 2);
-	ft_putstr_fd("[bench] sa: ", 2);
+	ft_putstr_fd("\n[bench] sa: ", 2);
 	put_long_fd(ops->sa, 2);
 	ft_putstr_fd(" sb: ", 2);
 	put_long_fd(ops->sb, 2);
@@ -59,7 +56,17 @@ void	print_bench(t_ops *ops, double disorder, const char *strategy,
 	put_long_fd(ops->pa, 2);
 	ft_putstr_fd(" pb: ", 2);
 	put_long_fd(ops->pb, 2);
-	ft_putstr_fd("\n[bench] ra: ", 2);
+	ft_putstr_fd("\n", 2);
+}
+
+void	print_bench(t_ops *ops, double disorder, const char *strategy,
+		const char *complexity)
+{
+	if (!ops || !strategy || !complexity)
+		return ;
+	print_bench_meta(disorder, strategy, complexity);
+	print_bench_ops_a(ops);
+	ft_putstr_fd("[bench] ra: ", 2);
 	put_long_fd(ops->ra, 2);
 	ft_putstr_fd(" rb: ", 2);
 	put_long_fd(ops->rb, 2);

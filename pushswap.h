@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pushswap.h                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: amigdadi <amigdadi@learner.42.tech>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/07 19:08:28 by amigdadi          #+#    #+#             */
+/*   Updated: 2026/03/07 19:08:32 by amigdadi         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PUSHSWAP_H
 # define PUSHSWAP_H
 
@@ -11,7 +23,7 @@ typedef struct s_node
 	int				data;
 	int				index;
 	struct s_node	*next;
-}t_node;
+}	t_node;
 
 typedef struct s_ops
 {
@@ -27,7 +39,7 @@ typedef struct s_ops
 	long	rra;
 	long	rrb;
 	long	rrr;
-}t_ops;
+}	t_ops;
 
 typedef enum e_mode
 {
@@ -35,13 +47,25 @@ typedef enum e_mode
 	MODE_MEDIUM,
 	MODE_COMPLEX,
 	MODE_ADAPTIVE
-}t_mode;
+}	t_mode;
 
 typedef struct s_config
 {
 	t_mode	mode;
 	int		bench;
-}t_config;
+}	t_config;
+
+typedef struct s_run
+{
+	t_ops		ops;
+	t_node		*a;
+	t_node		*b;
+	t_config	cfg;
+	int			*arr;
+	char		**tokens;
+	int			count;
+	double		disorder;
+}	t_run;
 
 /* parsing */
 void	error_exit(void);
@@ -72,8 +96,7 @@ void	simple_min_extract(t_node **a, t_node **b, t_ops *ops);
 void	chunk_sort(t_node **a, t_node **b, t_ops *ops);
 void	radix_sort(t_node **a, t_node **b, t_ops *ops);
 void	adaptive_sort(t_node **a, t_node **b, t_ops *ops);
-void	print_bench(t_ops *ops, double disorder, const char *strategy,
-		const char *complexity);
+void	print_bench(t_ops *ops, double disorder, const char *s, const char *c);
 
 /* operations */
 void	ops_init(t_ops *ops);

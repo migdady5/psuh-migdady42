@@ -6,7 +6,7 @@
 /*   By: amigdadi <amigdadi@learner.42.tech>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/27 00:00:00 by amigdadi          #+#    #+#             */
-/*   Updated: 2026/02/26 23:05:48 by amigdadi         ###   ########.fr       */
+/*   Updated: 2026/03/06 00:00:00 by amigdadi        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	push_core(t_node **dst, t_node **src)
 	tmp->next = *dst;
 	*dst = tmp;
 }
+
 void	rotate_core(t_node **s)
 {
 	t_node	*first;
